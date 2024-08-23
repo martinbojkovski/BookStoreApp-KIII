@@ -6,7 +6,32 @@ on:
       - main
 
 jobs:
-  build:
+  build-java-package:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 19
+        uses: actions/setup-java@v3
+        with:
+          java-version: '19'
+          distribution: 'temurin'
+
+      - name: Build app with Maven
+        run: mvn -B package -DskipTests --file pom.xml
+
+      - name: Archive build artifacts
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-artifact
+          path: target/*.jar
+          
+  build-push-docker:
     runs-on: ubuntu-latest
 
     steps:
