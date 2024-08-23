@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-mvc-clean-install:
+  mvc-clean-install:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -33,7 +33,7 @@ jobs:
           path: target/*.jar
           
   build-push-docker:
-    needs: build-java-package
+    needs: mvc-clean-install
     runs-on: ubuntu-latest
 
     steps:
