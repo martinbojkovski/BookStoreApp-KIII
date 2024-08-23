@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Books Homepage - Welcome to My Book Store</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>All the reviews for the books in stores</h1>
+</header>
+<form action="/reviews/search" method="POST">
+
+    <h3>Find a review by time of publish</h3>
+
+    <div>
+        <label>Time from: </label>
+        <input type="datetime-local" name="time1">
+    </div>
+    <div>
+        <label>Time to:</label>
+        <input type="datetime-local" name="time2">
+    </div>
+
+    <button type="submit">Search</button>
+
+</form>
+
+<hr>
+<h2 th:text="'The book ' + ${bookMax != null ? bookMax.get().getTitle() : ''} + ' has the maximum average score of ' + ${maxAvgScore}"> </h2>
+<hr>
+
+<div th:each="review:${reviews}">
+    <h3 th:text="${review.getBook().getTitle()}"></h3>
+    <div>
+        <h4 th:text="${review.getDescription()} +' - '+ ${#temporals.format(review.getTimestamp(),'dd-MM-yyyy HH:mm:ss')} +' (Score:'+ ${review.getScore()} +')'"></h4>
+    </div>
+</div>
+<button>
+    <a href="/books" style="text-decoration: none">Go back to books</a>
+</button>
+
+</body>
+</html>

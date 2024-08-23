@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete a book</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <form th:action="@{'/books/delete/{id}' (id=${book.getId()})}" th:method="POST">
+                <div class="form-group">
+                    <label>Book Title: </label>
+                    <label th:text="${book.getTitle()}"></label>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Book ISBN: </label>
+                    <label th:text="${book.getIsbn()}"></label>
+                </div>
+
+                <div class="form-group">
+                    <label>Book Genre: </label>
+                    <label th:text="${book.getGenre()}"></label>
+                </div>
+
+                <div class="form-group">
+                    <label>Book Year: </label>
+                    <label th:text="${book.getYear()}"></label>
+                </div>
+
+                <div class="form-group">
+                    <label>Book Store: </label>
+                    <label th:text="${store.getName()}"></label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to delete this book')">Delete</button>
+                <a type="button" class="btn btn-primary" href="/books">Back</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
