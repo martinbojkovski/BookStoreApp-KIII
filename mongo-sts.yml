@@ -6,7 +6,7 @@ metadata:
   labels:
     app: db
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: db
@@ -23,16 +23,6 @@ spec:
           ports:
             - containerPort: 27017
           env:
-            - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: mongo-secret
-                  key: MONGO_INITDB_ROOT_USERNAME
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mongo-secret
-                  key: MONGO_INITDB_ROOT_PASSWORD
             - name: MONGO_INITDB_DATABASE
               valueFrom:
                 configMapKeyRef:
@@ -46,4 +36,4 @@ spec:
           persistentVolumeClaim:
             claimName: mongo-pvc
       restartPolicy: Always
-  serviceName: db-service
+  serviceName: mongo-service

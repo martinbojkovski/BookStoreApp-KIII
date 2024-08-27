@@ -29,4 +29,9 @@ spec:
                 configMapKeyRef:
                   name: db-config
                   key: SPRING_DATA_MONGODB_URI
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: SPRING_JPA_HIBERNATE_DDL_AUTO
       restartPolicy: Always
