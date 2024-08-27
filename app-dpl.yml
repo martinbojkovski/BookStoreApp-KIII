@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kiii-bookstore-app
+  namespace: bookstore
+  labels:
+    app: kiii-bookstore-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kiii-bookstore-app
+  template:
+    metadata:
+      name: kiii-bookstore-app
+      labels:
+        app: kiii-bookstore-app
+    spec:
+      containers:
+        - name: kiii-bookstore-app
+          image: martinbojkovski/bookstore-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: SPRING_DATA_MONGODB_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: SPRING_DATA_MONGODB_URI
+      restartPolicy: Always

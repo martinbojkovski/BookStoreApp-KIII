@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+  namespace: bookstore
+data:
+  MONGO_INITDB_DATABASE: "book-store"
+  SPRING_DATA_MONGODB_URI: "mongodb://KIIIadmin:martin123@db-service:27017/book-store?authSource=admin"
+
