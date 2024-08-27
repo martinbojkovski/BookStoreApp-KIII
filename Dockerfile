@@ -1,9 +1,9 @@
 FROM eclipse-temurin:19-jre-jammy
 
-WORKDIR /app
+WORKDIR .
 
-COPY target/LabB-0.0.1-SNAPSHOT.jar bookstore-app.jar
+COPY target/*-SNAPSHOT.jar LabB.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "bookstore-app.jar"]
+CMD ["java", "-jar", "LabB.jar"]

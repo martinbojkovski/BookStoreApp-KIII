@@ -6,15 +6,13 @@ services:
     image: "mongo"
     container_name: "mongo2023_lab"
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=KIIIadmin
-      - MONGO_INITDB_ROOT_PASSWORD=martin123
       - MONGO_INITDB_DATABASE=book-store
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
 
-  # Your application service
+  # Application service
   bookstore-app:
     build:
       context: .
@@ -25,7 +23,7 @@ services:
     depends_on:
       - mongo-db
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://KIIIadmin:martin123@mongo-db:27017/book-store?AuthSource=admin
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo-db:27017/book-store
 
 volumes:
   mongo-data:
