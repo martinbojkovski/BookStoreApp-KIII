@@ -5,6 +5,6 @@ metadata:
   namespace: bookstore
 data:
   MONGO_INITDB_DATABASE: "book-store"
-  SPRING_DATA_MONGODB_URI: "mongodb://mongo-service:27017/book-store"
+  SPRING_DATA_MONGODB_URI: "mongodb://mongo:27017/book-store?replicaSet=rs0"
   SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
 

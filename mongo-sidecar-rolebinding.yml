@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: mongo-sidecar-rolebinding
+  namespace: bookstore
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: bookstore
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io

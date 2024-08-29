@@ -1,39 +1,50 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: db
+  name: mongo
   namespace: bookstore
-  labels:
-    app: db
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: db
+      role: mongo
+      environment: test
+  serviceName: "mongo"
+  replicas: 3
   template:
     metadata:
-      name: db
       labels:
-        app: db
+        role: mongo
+        environment: test
     spec:
+      terminationGracePeriodSeconds: 10
       containers:
-        - name: db
-          image: mongo:latest
-          imagePullPolicy: IfNotPresent
+        - name: mongo
+          image: mongo
+          command:
+            - mongod
+            - "--replSet"
+            - rs0
+            - "--bind_ip_all"
           ports:
             - containerPort: 27017
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+        - name: mongo-sidecar
+          image: cvallance/mongo-k8s-sidecar
           env:
+            - name: MONGO_SIDECAR_POD_LABELS
+              value: "role=mongo,environment=test"
             - name: MONGO_INITDB_DATABASE
               valueFrom:
                 configMapKeyRef:
                   name: db-config
                   key: MONGO_INITDB_DATABASE
-          volumeMounts:
-            - name: db-data
-              mountPath: /data/db
-      volumes:
-        - name: db-data
-          persistentVolumeClaim:
-            claimName: mongo-pvc
-      restartPolicy: Always
-  serviceName: mongo-service
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi

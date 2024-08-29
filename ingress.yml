@@ -17,13 +17,3 @@ spec:
                 name: app-service
                 port:
                   number: 80
-    - host: martin-bookstore.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: app-service
-                port:
-                  number: 80
